@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import express from "express"
+import cors from "cors"
+import userRouter from './routes/user.routes'
+// import cookieParser from "cookie-parser"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
+const App = express()
+
+App.use(cors({
+  origin: process.env.CORS_ORIGIN,
+  credentials: true
+}))
+
+App.use(express.json({limit:"16kb"}))
+App.use(express.urlencoded({ 
+  extended: true,limit:"16kb"}))
+  App.use(express.static("public"))
+
+
+  //routes declaration
+  App.use("/api/v1/users", userRouter)
+
+// http://localhost:8000/api/v1/users + /register  or + /login
 export default App;
