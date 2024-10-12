@@ -1,4 +1,22 @@
-const path = require('path');
+// const path = require('path');
+// module.exports = {
+//   // Your existing config
+//   resolve: {
+//     fallback: {
+//       "zlib": false,
+//       "querystring": false,
+//       "path": false,
+//       "crypto": false,
+//       "stream": false,
+//     },
+//   },
+// };
+
+
+
+
+import path from 'path';
+// const path = require('path');
 
 module.exports = {
   // Your existing configuration...

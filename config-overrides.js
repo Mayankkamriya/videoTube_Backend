@@ -1,4 +1,8 @@
-const webpack = require('webpack');
+import webpack from 'webpack';
+
+// const webpack = require('webpack');
+
+
 
 module.exports = {
     webpack: function(config, env) {

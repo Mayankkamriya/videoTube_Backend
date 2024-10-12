@@ -1,13 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import dotenv from 'dotenv'
+import connectDB from './db/index.js'
+import app from './App.js'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-reportWebVitals();
+dotenv.config({path: './env'})
+
+connectDB()
+.then( ()=>{ // connectDB() ho jaye to(then) usme error aaye to (catch)
+    app.listen(process.env.PORT || 8000 ,()=>{
+console.log(`server is running at port : ${process.env.PORT}`)
+    })
+
+}) 
+.catch((err)=>{
+    console.log("MONGOdb connection failed!" , err)
+})

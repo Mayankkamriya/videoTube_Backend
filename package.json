@@ -2,71 +2,42 @@
   "name": "videotube",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "dev": "nodemon server.js src/index.js"
+  },
+  "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.9.1",
+    "nodemon": "^3.1.7",
+    "react-dev-utils": "^12.0.1",
+    "resolve": "^1.22.8",
+    "webpack-dev-server": "^5.1.0",
+    "webpack-manifest-plugin": "^5.0.0",
+    "workbox-webpack-plugin": "^7.1.0"
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@babel/runtime": "^7.25.7",
+    "babel-preset-react-app": "^10.0.1",
     "bcrypt": "^5.1.1",
-    "browserify-zlib": "^0.2.0",
-    "buffer": "^6.0.3",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "crypto-browserify": "^3.12.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^10.0.0",
+    "dotenv-expand": "^11.0.6",
+    "eslint-webpack-plugin": "^4.2.0",
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
     "mongoose-aggregate-paginate-v2": "^1.1.2",
     "multer": "^1.4.5-lts.1",
-    "path-browserify": "^1.0.1",
-    "querystring-es3": "^0.2.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-scripts": "5.0.1",
-    "stream-browserify": "^3.0.0",
-    "stream-http": "^3.2.0",
-    "url": "^0.11.4",
-    "util": "^0.12.3",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "browser": {
-    "zlib": "browserify-zlib",
-    "querystring": "querystring-es3",
-    "path": "path-browserify",
-    "crypto": "crypto-browserify",
-    "fs": false,
-    "http": "stream-http",
-    "net": false,
-    "stream": "stream-browserify",
-    "util": "util"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "react-app-rewired": "^2.2.1"
+    "react": "^18.3.1"
   }
 }
