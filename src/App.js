@@ -18,5 +18,5 @@ App.use(express.urlencoded({
   //routes declaration
   App.use("/api/v1/users", userRouter)
 
-// http://localhost:8000/api/v1/users + /register  or + /login
+// http://localhost:4000/api/v1/users + /register  or + /login
 export default App;
