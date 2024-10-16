@@ -1,25 +1,6 @@
-// const path = require('path');
-// module.exports = {
-//   // Your existing config
-//   resolve: {
-//     fallback: {
-//       "zlib": false,
-//       "querystring": false,
-//       "path": false,
-//       "crypto": false,
-//       "stream": false,
-//     },
-//   },
-// };
-
-
-
-
 import path from 'path';
-// const path = require('path');
 
 module.exports = {
-  // Your existing configuration...
   
   resolve: {
     fallback: {
@@ -35,7 +16,7 @@ module.exports = {
       "stream": require.resolve("stream-browserify"),
       "util": require.resolve("util/"),
       "http": require.resolve("stream-http"),
-      "fs": false,  // Use false if you don't need 'fs' in the browser
+      "fs": false, 
     "net": false,
     "https": require.resolve("stream-http"),   
   },

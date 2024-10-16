@@ -1,9 +1,12 @@
 import express from "express"
 import cors from "cors"
+import cookieParser from "cookie-parser";
 import userRouter from './routes/user.routes.js'
 
 const App = express()
 
+
+App.use(cookieParser()); 
 App.use(cors({
   origin: process.env.CORS_ORIGIN,
   credentials: true

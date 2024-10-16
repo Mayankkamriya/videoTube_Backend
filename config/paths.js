@@ -28,13 +28,6 @@ const publicUrlOrPath = getPublicUrlOrPath(
   process.env.PUBLIC_URL
 );
 
-
-// const publicUrlOrPath = getPublicUrlOrPath(
-//   process.env.NODE_ENV === 'development',
-//   require(resolveApp('package.json')).homepage,
-//   process.env.PUBLIC_URL
-// );
-
 const buildPath = process.env.BUILD_PATH || 'build';
 
 const moduleFileExtensions = [
@@ -89,9 +82,5 @@ const paths = {
   publicUrlOrPath,
 };
 
-
-
 export default paths;
-
 export { moduleFileExtensions };
-// module.exports.moduleFileExtensions = moduleFileExtensions;
