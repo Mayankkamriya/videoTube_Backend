@@ -1,7 +1,8 @@
 import { Router } from "express";
-import {logoutUser, loginUser,registerUser } from "../controllers/user.controllers.js";
+import {logoutUser, loginUser,registerUser,refreshaccessToken } from "../controllers/user.controllers.js";
 import {upload} from "../middlewares/multer.middleware.js";
 import  { verifyJWT}  from "../middlewares/auth.middleware.js";
+
 
 const router=Router();
 
@@ -17,10 +18,13 @@ upload.fields([   // inserting an middleware upload (for uploading) before regis
         }
     ]),       
     registerUser)
-
-
     router.route("/login").post(loginUser)
 
-    router.route("/logout").post(verifyJWT,logoutUser) //Before logout we've added middleware (verifyJWT)
+    // Secured route because user need to be login for doing these action
 
+    router.route("/logout").post(verifyJWT,logoutUser) //Before logout we've added middleware (verifyJWT)
+    
+    router.route("/refresh-token").post(refreshaccessToken) //Here we do not need to use verify and Jwt because we have already done in refreshaccesstoken function
+
+ 
 export default router

@@ -50,9 +50,9 @@ const userSchema = new Schema(
     timestamps: true
 })
 
-userSchema.pre("save", async function (next){
-    if(!this.isModified("password")) return next();
-    this.password= await bcrypt.hash(this.password,10)
+userSchema.pre("save", async function (next){  //Every time when someone do click on save then this schema start before saving
+    if(!this.isModified("password")) return next(); // If password is not modified do nothing
+    this.password= await bcrypt.hash(this.password,10)//If password is modifying then convert in bcrypt
     next()
 })
 
