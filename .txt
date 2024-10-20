@@ -10,3 +10,10 @@ Instead of using try-catch in every file we have make a different error file we 
     --  Remove password and refresh token field from response
     --  Check for user creation
     --  Return response      */
+
+
+          Get new access token by Refresh Token 
+ -- we need to remember that first you need to send refresh token in request.body in Postman.      
+ -- And you get refreshed open by passing login request in request body. 
+ -- After passing request we need to check VScode terminalfro refresh token.
+ -- After getting refresh token we write Refresh token in request.body in postman for new access token which we see in res.body. 

@@ -4,6 +4,7 @@ import {User} from "../models/user.js"
 import uploadonCloudinary from "../utils/cloudinary.js" 
 import ApiResponse  from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 const generateAccessAndRefreshToken= async(userID) =>{
 try {
@@ -201,6 +202,14 @@ const registerUser = asyncHandler(async (req,res) =>{
 })
 
 const refreshaccessToken = asyncHandler(async(req, res) => {
+
+/*
+ -- we need to remember that first you need to send refresh token in request.body in Postman.      
+ -- And you get refreshed open by passing login request in request body. 
+ -- After passing request we need to check VScode terminalfro refresh token.
+ -- After getting refresh token we write Refresh token in request.body in postman for new access token which w
+e sese in res.body. */
+
  try {
     // Extract refresh token from cookies or body
     const incomingRefreshToken = req.cookies
@@ -283,17 +292,25 @@ const changeCurrentPassword = asyncHandler(async(req,res)=>{
 })
 
 const getCurrentUser = asyncHandler(async(req,res)=>{
+
+    const user = await User.findByIdAndUpdate(
+        req.user?._id,).select("-password")
+
     return res
     .status(200)
-    .json(200,req.user,"current user fetched successfully")
+    .json(
+        new ApiResponse(200,user, "Cover image updated successfully"))
 })
 
 const updateAccountDetails = asyncHandler(async(req,res)=>{
-    const user = User.findByIdAndUpdate(
+    const { fullName, email } = req.body; // Extract fullName and email from req.body
+    const user = await User.findByIdAndUpdate(
+      // Check if fullName and email are coming through correctly
+    // console.log("FullName:", fullName, "Email:", email);
         req.user?._id,
         {
             $set:{ 
-                fullName,  // both ways are correct
+                fullName: fullName,  // both ways are correct
                 email: email
             }
         },
@@ -376,7 +393,10 @@ const getUserChannelProfile = asyncHandler(async(req,res)=>{
 const channel =await User.aggregate([
     {
         $match :{ // first we match user
-            username: username?.toLowerCase()
+            
+        //     username: username?.toLowerCase()
+        username: { $regex: new RegExp(`^${username?.toLowerCase()}`, "i") }
+
         }
     },
     {
@@ -397,13 +417,19 @@ const channel =await User.aggregate([
     },
     {
         $addFields: { // we add field like subscribersCount
-            //,channelsSbubscribedToCount
+
             subscribersCount: {
-                $size: "$subscribers"
                 
+                // $size: "$subscribers"
+                $size: { $ifNull: ["$subscribers", []] }
+
+
             },
             channelsSbubscribedToCount:{
-                $size:"$subscribedTo"
+                
+                // $size:"$subscribedTo"
+                $size: { $ifNull: ["$subscribedTo", []] }
+
             },
             isSubscribed:{
                 $cond:{
@@ -429,7 +455,7 @@ const channel =await User.aggregate([
     }
 ])
 
-console.log(channel)
+console.log("Aggregation result: ",channel)
 
 if(!channel?.length){  // if channel does not exits
     throw new ApiError(400, "channel does not exist")
@@ -443,8 +469,65 @@ if(!channel?.length){  // if channel does not exits
 
 })
 
+const getWatchHistory = asyncHandler(async(req,res)=>{
+    const user = await User.aggregate([
+        {
+            $match:{
+                _id: new mongoose.Types.ObjectId(req.
+                    user._id)
+            }
+        },
+        {
+            $lookup:{
+                from: "videos",
+                localField: "watchHistory",
+                foreignField: "_id",
+                as: "watchHistory",
+
+                pipeline:[
+                    {
+                        $lookup:{
+                            from: "users",
+                            localField: "owner",
+                            foreignField: "_id",
+                            as:"owner",
+                            pipeline:[
+                                {
+                        $project: {
+                            fullName:1,
+                            username:1,
+                            avatar:1
+                        }
+                            }
+                        ]
+
+                        }
+                    },
+                    {
+                        $addFields:{
+                        owner:{
+                            $first:"$owner"
+                            }
+                        }
+                    }   
+                ]
+            }
+        }
+    ])
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(   // from user aggregation we take 1st value
+            200 , user[0].watchHistory,
+            "watch History fecthed successfully"
+        )
+    )
+
+})
+
 export {registerUser,loginUser,logoutUser,
     refreshaccessToken,changeCurrentPassword,
     getCurrentUser,updateAccountDetails,
     updateUserAvatar,updateUserCoverImage,
-    getUserChannelProfile}
+    getUserChannelProfile,getWatchHistory}

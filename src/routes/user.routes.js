@@ -1,5 +1,9 @@
 import { Router } from "express";
-import {logoutUser, loginUser,registerUser,refreshaccessToken } from "../controllers/user.controllers.js";
+import {  registerUser,loginUser,logoutUser,
+    refreshaccessToken,changeCurrentPassword,
+    getCurrentUser,updateAccountDetails,
+    updateUserAvatar,updateUserCoverImage,
+    getUserChannelProfile,getWatchHistory } from "../controllers/user.controllers.js";
 import {upload} from "../middlewares/multer.middleware.js";
 import  { verifyJWT}  from "../middlewares/auth.middleware.js";
 
@@ -26,5 +30,18 @@ upload.fields([   // inserting an middleware upload (for uploading) before regis
     
     router.route("/refresh-token").post(refreshaccessToken) //Here we do not need to use verify and Jwt because we have already done in refreshaccesstoken function
 
- 
-export default router
+    router.route("/change-password").post(verifyJWT ,changeCurrentPassword)
+
+    router.route("/current-user").get(verifyJWT ,getCurrentUser)
+
+    router.route("/update-account").patch(verifyJWT ,updateAccountDetails)
+
+    router.route("/avatar").patch(verifyJWT ,upload.single("avatar") , updateUserAvatar)
+    
+    router.route("/cover-image").patch(verifyJWT ,upload.single("coverImage"),updateUserCoverImage)
+
+    router.route("/c/:username").get(verifyJWT ,getUserChannelProfile)
+
+    router.route("/history").get(verifyJWT ,getWatchHistory)
+
+    export default router
