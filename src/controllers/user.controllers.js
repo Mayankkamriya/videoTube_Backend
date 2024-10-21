@@ -479,21 +479,21 @@ const getWatchHistory = asyncHandler(async(req,res)=>{
         },
         {
             $lookup:{
-                from: "videos",
+                from: "videos",  // by this we get videos for watchHistory 
                 localField: "watchHistory",
                 foreignField: "_id",
                 as: "watchHistory",
 
-                pipeline:[
+                pipeline:[ // but in video we want owner also that's why we created one more pipeline
                     {
-                        $lookup:{
+                        $lookup:{  
                             from: "users",
                             localField: "owner",
                             foreignField: "_id",
                             as:"owner",
-                            pipeline:[
-                                {
-                        $project: {
+                            pipeline:[ // subpipeline
+                                { //  we implementing our pipeline inside lookup  
+                        $project: { // we do not want all detail of owner. we tell what we want to project
                             fullName:1,
                             username:1,
                             avatar:1

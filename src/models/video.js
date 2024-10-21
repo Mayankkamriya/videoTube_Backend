@@ -1,5 +1,6 @@
 import mongoose ,{Schema} from "mongoose";
-import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2"
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2" 
+// mongooseAggregatePaginate - project talks about only that page item not whole items on poject 
 
 const videoSchema = new Schema(
     {
