@@ -17,3 +17,8 @@ Instead of using try-catch in every file we have make a different error file we 
  -- And you get refreshed open by passing login request in request body. 
  -- After passing request we need to check VScode terminalfro refresh token.
  -- After getting refresh token we write Refresh token in request.body in postman for new access token which we see in res.body. 
+
+   
+      This is the link of our videoTube project model structure
+ https://app.eraser.io/workspace/iSmwWrGRkSCM7rXCLZtV?origin=share
+
